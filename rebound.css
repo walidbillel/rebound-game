@@ -1,5 +1,6 @@
 body {
     font-family: sans-serif;
+    background-color: black;
 }
 
 #plainArea {
@@ -16,7 +17,7 @@ body {
     left: 228px;
     width: 64px;
     height: 16px;
-    background-color: coral;
+    background-color: rgb(236, 63, 0);
 }
 
 #ball {
@@ -26,7 +27,7 @@ body {
     width: 16px;
     height: 16px;
     border-radius: 8px;
-    background-color: cornflowerblue;
+    background-color: rgb(255, 255, 255);
 }
 
 #score {
@@ -36,6 +37,6 @@ body {
     width: calc(100% - 10px);
     height: 20px;
     color: white;
-    background-color: tomato;
+    background-color: rgb(66, 65, 65);
     padding: 5px;
 }
