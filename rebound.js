@@ -24,6 +24,7 @@ function init () {
     paddle = document.getElementById('paddle');
     score = document.getElementById('score');
     playingArea = document.getElementById('palyingArea');
+    document.addEventListener('keydown', keyListener, false)
     layoutPage();
 }
 
@@ -34,4 +35,20 @@ function layoutPage() {
     pHeight = aHeight - 22;
     playingArea.style.width = pWidth + 'px';
     playingArea.style.height = pHeight + 'px'
+}
+
+function keyListener(e) {
+    var key = e.keyCode
+    if((key == 37 || key == 65) && paddleLeft > 0) {
+        paddleLeft -= pdx;
+        if(paddleLeft < 0) paddleLeft = 0;
+    }
+
+    else if((key == 39 || key == 68) && paddleLeft < pWidth - 64) {
+        paddleLeft += pdx;
+        if(paddleLeft > pWidth - 64) paddleLeft = pWidth - 64;
+    }
+    paddle.style.left = paddleLeft + 'px';
+
+
 }
