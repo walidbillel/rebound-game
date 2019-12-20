@@ -15,6 +15,7 @@ var timer;
 var paddleLeft = 228;
 var ballLeft = 100;
 var ballTop = 8;
+var drag;
 
 window.addEventListener('load', init);
 window.addEventListener('resize', init);
@@ -26,6 +27,15 @@ function init(){
     playingArea = document.getElementById('playingArea');
     layoutPage();
     document.addEventListener('keydown', keyListener, false);
+
+    playingArea.addEventListener('mousedown', mouseDown, false);
+    playingArea.addEventListener('mousemove', mouseMove, false);
+    playingArea.addEventListener('mouseup', mouseUp, false);
+
+    
+    playingArea.addEventListener('touchstart', mouseDown, false);
+    playingArea.addEventListener('touchmove', mouseMove, false);
+    playingArea.addEventListener('touchend', mouseUp, false);
     
     timer = requestAnimationFrame(start);
 }
