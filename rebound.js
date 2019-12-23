@@ -7,6 +7,8 @@ var controls;
 var newButton;
 var difficultySelect;
 var doneButton;
+var snd;
+var music;
 
 var aWidth;
 var aHeight;
@@ -21,6 +23,14 @@ var paddleLeft = 228;
 var ballLeft = 100;
 var ballTop = 8;
 var drag = false;
+var sndEnabled = false;
+var musicEnabled = false;
+
+var beepX;
+var beepY;
+var beepPaddle;
+var beepGameOver;
+var bgMusic;
 
 window.addEventListener('load', init);
 window.addEventListener('resize', init);
@@ -35,6 +45,8 @@ function init(){
     newButton = document.getElementById('new');
     difficultySelect = document.getElementById('difficulty');
     doneButton = document.getElementById('done');
+    snd = document.getElementById('snd');
+    music = document.getElementById('music');
     layoutPage();
     document.addEventListener('keydown', keyListener, false);
     
@@ -51,6 +63,9 @@ function init(){
     difficultySelect.addEventListener('change', function(){
         setDifficulty(difficultySelect.selectedIndex)
     },false);
+    
+    snd.addEventListener('click', toggleSound, false);
+    music.addEventListener('click', toggleMusic, false);
     
     timer = requestAnimationFrame(start);
 }
@@ -116,12 +131,14 @@ function detectCollisions(){
 }
 function collisionX(){
     if(ballLeft < 4 || ballLeft > pWidth - 20){
+        playSound(beepX);
         return true;
     }
     return false;
 }
 function collisionY(){
     if(ballTop < 4){
+        playSound(beepY);
         return true;
     }
     if(ballTop > pHeight - 64){
@@ -136,6 +153,7 @@ function collisionY(){
            }else{
                dx = 2;
            }
+           playSound(beepPaddle);
            return true;
        }else if(ballLeft >= paddleLeft && ballLeft < paddleLeft + 16){
            if(dx < 0){
@@ -143,6 +161,7 @@ function collisionY(){
            }else{
                dx = 8;
            }
+           playSound(beepPaddle);
            return true;
        }else if(ballLeft >= paddleLeft + 48 && ballLeft <= paddleLeft + 64){
            if(dx < 0){
@@ -150,6 +169,7 @@ function collisionY(){
            }else{
                dx = 8;
            }
+           playSound(beepPaddle);
            return true;
        }
     }
@@ -170,6 +190,7 @@ function gameOver(){
     cancelAnimationFrame(timer);
     score.innerHTML += "    Game Over!";
     score.style.backgroundColor = 'rgb(128,0,0)';
+    playSound(beepGameOver);
 }
 
 function mouseDown(e){
@@ -229,4 +250,65 @@ function newGame(){
     setDifficulty(difficultySelect.selectedIndex);
     score.style.backgroundColor = 'rgb(32,128,64)';
     hideSettings();
+}
+
+
+function initAudio(){
+    //load audio files
+    beepX = new Audio('sounds/beepX.mp3');
+    beepY = new Audio('sounds/beepY.mp3');
+    beepPaddle = new Audio('sounds/beepPaddle.mp3');
+    beepGameOver = new Audio('sounds/beepGameOver.mp3');
+    bgMusic = new Audio('sounds/music.mp3');
+    //turn off volume
+    beepX.volume = 0;
+    beepY.volume = 0;
+    beepPaddle.volume = 0;
+    beepGameOver.volume = 0;
+    bgMusic.volume = 0;
+    //play each file
+    //this grants permission
+    beepX.play();
+    beepY.play();
+    beepPaddle.play();
+    beepGameOver.play();
+    bgMusic.play();
+    //pause each file
+    //this stores them in memory for later
+    beepX.pause();
+    beepY.pause();
+    beepPaddle.pause();
+    beepGameOver.pause();
+    bgMusic.pause();
+    //set the volume back for next time
+    beepX.volume = 1;
+    beepY.volume = 1;
+    beepPaddle.volume = 1;
+    beepGameOver.volume = 1;
+    bgMusic.volume = 1;
+}
+
+function toggleSound(){
+    if(beepX == null){
+        initAudio();
+    }
+    sndEnabled = !sndEnabled;
+}
+
+function playSound(objSound){
+    if(sndEnabled)
+        objSound.play();
+}
+
+function toggleMusic(){
+    if(bgMusic == null){
+        initAudio();
+    }
+    if(musicEnabled)
+        bgMusic.pause();
+    else{
+        bgMusic.loop = true;
+        bgMusic.play();
+    }
+    musicEnabled = !musicEnabled;
 }
