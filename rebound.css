@@ -2,10 +2,10 @@ body {
     font-family: sans-serif;
 }
 
-#plainArea {
+#playingArea {
     position: absolute;
-    border: 4px black solid;
-    background-color: burlywood;
+    border: 2px rgb(0, 0, 0) solid;
+    background-color: rgb(47, 207, 173);
     top: 10px;
     left: 10px;
 }
@@ -16,7 +16,7 @@ body {
     left: 228px;
     width: 64px;
     height: 16px;
-    background-color: rgb(0, 17, 255);
+    background-color: rgb(0, 0, 0);
 }
 
 #ball {
@@ -26,7 +26,7 @@ body {
     width: 16px;
     height: 16px;
     border-radius: 8px;
-    background-color: rgb(255, 187, 0);
+    background-color: rgb(19, 71, 242);
 }
 
 #score {
