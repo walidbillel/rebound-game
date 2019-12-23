@@ -15,7 +15,7 @@ var timer;
 var paddleLeft = 228;
 var ballLeft = 100;
 var ballTop = 8;
-var drag;
+var drag = false;
 
 window.addEventListener('load', init);
 window.addEventListener('resize', init);
@@ -133,3 +133,20 @@ function gameOver(){
     score.style.backgroundColor = 'rgb(128,0,0)';
 }
 
+function mouseDown(e) {
+    drag = true;
+}
+
+function mouseUp(e) {
+    drag = false;
+}
+
+function mouseMove(e) {
+    if(drag) {
+        e.preventDefault();
+        paddleLeft = e.clientX - 32 || e.targetTouches[0].pageX - 32;
+        if(paddleLeft < 0) paddleLeft = 0;
+        if(paddleLeft > (pWidth - 64)) paddleLeft = pWidth - 64;
+        paddle.style.left = paddleLeft + 'px';
+    }
+}
